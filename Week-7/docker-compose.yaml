@@ -41,8 +41,6 @@ services:
         ipv4_address: 172.100.0.101
     volumes:
         - backend_volume:/data/db
-
-
 networks:
   backend-net:
     ipam:
