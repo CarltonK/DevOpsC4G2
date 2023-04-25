@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+    
+    tools {nodejs "node"}
+    
+    environment {
+        DOCKERHUB_CREDENTIALS=credentials('docker')
+    }
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Build is starting'
+            }
+        }
+        stage('Clone github repository') {
+            steps {
+                git url: 'https://github.com/CarltonK/yolo-testing-group2', branch: 'master'
+            }
+        }
+        stage('Get latest commit') {
+            steps {
+                sh '''
+                   export COMMIT=$(git log --oneline | awk '{print $1}' | head -n 1)
+                   echo $COMMIT
+                   '''
+            }
+        }
+        stage('List files and directories') {
+            steps {
+                sh '''
+                   ls -al
+                   '''
+            }
+        }
+        stage('Check docker version') {
+            steps {
+                sh '''
+                   docker --version
+                   '''
+            }
+        }
+        stage('Build backend image') {
+            steps {
+                sh '''
+                   cd backend
+                   docker build -t hawksdev/g2-yolo-backend:1.0.0 .
+                   '''
+            }
+        }
+        stage('Build client image') {
+            steps {
+                sh '''
+                   cd client
+                   docker build -t hawksdev/g2-yolo-client:1.0.0 .
+                   '''
+            }
+        }
+        stage('DockerHub Login'){
+            steps {
+                sh '''
+                   echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                   '''
+            }
+        }
+        stage('Push images to DockerHub') {
+            steps {
+                sh '''
+                   echo 'Pushing client'    
+                   docker push hawksdev/g2-yolo-client:1.0.0
+                   
+                   echo 'Pushing backend'
+                   docker push hawksdev/g2-yolo-backend:1.0.0
+                   '''
+            }
+        }
+        stage('End') {
+            steps {
+                echo 'Build has run successfully'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker logout'
+        }
+    }
+}
