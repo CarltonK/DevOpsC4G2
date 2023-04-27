@@ -1,6 +1,7 @@
 const server = require('./index');
 const request = require('supertest');
 
+// Test Suite 1 - The first batch of related tests
 describe('Base Endpoints', () => {
     // Individual tests
     it('Can do a basic GET request', async () => {

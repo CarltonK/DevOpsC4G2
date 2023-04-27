@@ -1,0 +1,6 @@
+projectKey=week-8
+serverUrl=http://localhost:9000
+serverVersion=9.9.0.65466
+dashboardUrl=http://localhost:9000/dashboard?id=week-8
+ceTaskId=AYfBdmM7tY-ScZarUY_E
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYfBdmM7tY-ScZarUY_E

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "start": "node ."
+    "start": "node .",
+    "sonar": "node sonar.js"
   },
   "keywords": [],
   "author": "",
@@ -15,12 +16,20 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
+    "jest-sonar-reporter": "^2.0.0",
+    "sonarqube-scanner": "^3.0.1",
     "supertest": "^6.3.3"
   },
   "jest": {
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
-    ]
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-reporter.xml",
+    "indent": 4
   }
 }
