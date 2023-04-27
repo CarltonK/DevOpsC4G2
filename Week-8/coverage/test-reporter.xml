@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
     <file path="/home/developer/Moringa/DevOpsC4G2/Week-8/test.js">
-        <testCase name="Base Endpoints Can do a basic GET request" duration="47"/>
+        <testCase name="Base Endpoints Can do a basic GET request" duration="51"/>
         <testCase name="Base Endpoints Can do a basic GET request on /users" duration="4"/>
     </file>
 </testExecutions>
