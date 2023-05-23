@@ -1,0 +1,11 @@
+- name: Ping playbook
+  hosts: all
+  vars:
+    filename: ansible-playbook.txt
+  tasks:
+    - name: Ping my hosts
+      ping:
+    - name: Generate new files on hosts
+      shell: 'touch {{ filename }}'
+    - name: Add some content to generated files above
+      shell: 'echo "HELLO WORLD" >> {{ filename }}'
