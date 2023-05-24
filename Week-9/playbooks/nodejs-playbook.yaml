@@ -1,14 +1,13 @@
-- name: Install NodeJS
+- name: Install NodeJs
   hosts: all
   tasks:
-    - name: Update the cache
-      apt:
-        name: curl
-        update_cache: yes
-    - name: Download NodeJS package
-      shell: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-    - name: Install NodeJS
-      apt:
+    - name: Install Node
+      shell: curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      args:
+        executable: /bin/bash
+    - name: Install nodejs package
+      become: true
+      ansible.builtin.apt:
         name:
           - nodejs
           - npm
