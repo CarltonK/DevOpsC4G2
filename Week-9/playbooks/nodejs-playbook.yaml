@@ -5,7 +5,6 @@
       apt:
         name: curl
         update_cache: yes
-        upgrade: yes
     - name: Download NodeJS package
       shell: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
     - name: Install NodeJS
