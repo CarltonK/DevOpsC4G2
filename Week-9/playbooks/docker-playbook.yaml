@@ -29,7 +29,7 @@
 
     - name: Add docker repository
       apt_repository:
-        repo: https://download.docker.com/linux/debian bionic stable
+        repo: deb https://download.docker.com/linux/debian bionic stable
         state: present
 
     - name: Update the cache
