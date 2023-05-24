@@ -6,10 +6,11 @@
         name: curl
         update_cache: yes
     - name: Download NodeJS package
-      shell: curl -sL https://deb.nodesource.com/setup_16.x | bash -
+      shell: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
     - name: Install NodeJS
       apt:
         name:
           - nodejs
           - npm
+        state: present
         update_cache: yes
