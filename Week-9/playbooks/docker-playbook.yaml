@@ -1,5 +1,8 @@
 - name: Install Docker
   hosts: all
+  vars:
+    client_image: hawksdev/g2-yolo-client:1.0.0
+    backend_image: hawksdev/g2-yolo-backend:1.0.0
   tasks:
     - name: Update the cache
       apt:
@@ -46,10 +49,15 @@
       pip:
         name: docker
 
-    # - name: Pull the official Debian image using the container_image variable. This image will be used in next step.
-    #   docker_image:
-    #     name: "{{ container_image }}"
-    #     source: pull
+    - name: Pull the client image
+      community.docker.docker_image:
+        name: "{{ client_image }}"
+        source: pull
+
+    - name: Pull the backend image
+      community.docker.docker_image:
+        name: "{{ backend_image }}"
+        source: pull
 
     # - name: Creates 3 containers, using the variables we defined in the vars file
     #   docker_container:
