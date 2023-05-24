@@ -3,6 +3,7 @@
   vars:
     client_image: hawksdev/g2-yolo-client:1.0.0
     backend_image: hawksdev/g2-yolo-backend:1.0.0
+    app_folder: /opt/yolo
   tasks:
     - name: Update the cache
       apt:
@@ -38,10 +39,10 @@
     - name: Install packages
       apt:
         name:
-          - docker-ce 
-          - docker-ce-cli 
-          - containerd.io 
-          - docker-buildx-plugin 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
           - docker-compose-plugin
         update_cache: yes
 
@@ -59,10 +60,17 @@
         name: "{{ backend_image }}"
         source: pull
 
-    # - name: Creates 3 containers, using the variables we defined in the vars file
-    #   docker_container:
-    #     name: "{{ container_name }}{{ item }}"
-    #     image: "{{ container_image }}"
-    #     command: "{{ command_to_run }}"
-    #     state: present
-    #   with_sequence: count={{ no_containers }}
+    - name: Create app folder
+      file:
+        path: "{{ app_folder }}"
+        state: directory
+
+    - name: Copy docker-compose file
+      template:
+        src: ./../docker-compose.yaml
+        dest: "{{ app_folder }}/docker-compose.yaml"
+
+    - name: Start containers
+      shell: docker-compose up -d
+      args:
+        chdir: "{{ app_folder }}"
