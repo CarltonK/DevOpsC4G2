@@ -1,12 +1,6 @@
 - name: Install NodeJS
   hosts: all
   tasks:
-    - name: Update the cache
-      apt:
-        name: curl
-        update_cache: yes
-    - name: Download NodeJS package
-      shell: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
     - name: Install NodeJS
       apt:
         name:
