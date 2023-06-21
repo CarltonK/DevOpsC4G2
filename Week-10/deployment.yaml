@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devopsg2-k8s-deployment
+  labels:
+    app: devopsg2-k8s
+spec:
+  selector:
+    matchLabels:
+      app: devopsg2-k8s
+  template:
+    metadata:
+      labels:
+        app: devopsg2-k8s
+    spec:
+      containers:
+        - name: devopsg2-k8s
+          image: hawksdev/devopsg2-k8s:1.0.2
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: devopsg2-k8s-config-map
+                  key: NODE_ENV
+            
