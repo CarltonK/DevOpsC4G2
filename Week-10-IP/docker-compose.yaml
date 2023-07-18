@@ -1,0 +1,36 @@
+version: '3'
+services:
+  backend:
+    container_name: backend_container
+    image: hawksdev/devops-group2-backend:1.0.0
+    ports:
+      - 5000:5000
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mongo
+    environment:
+      PORT: 5000
+      MONGODB_URI: 'mongodb://admin:admin@mongo:27017/'
+  client:
+    container_name: client_container
+    image: hawksdev/devops-group2-client:1.0.0
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app
+    depends_on:
+      - backend
+    environment:
+      PORT: 3000
+  mongo:
+    container_name: database_container
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - test-vol:/data/db
+volumes:
+  test-vol:

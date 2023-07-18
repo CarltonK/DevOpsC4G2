@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-group2-database-deployment
+spec:
+  selector:
+    matchLabels:
+      app: devops-group2-database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: devops-group2-database
+    spec:
+      containers:
+        - name: devops-group2-database
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: database-volume
+              mountPath: /data/db
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: devops-group2-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: devops-group2-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: devops-group2-database-claim
+

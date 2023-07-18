@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-group2-client
+spec:
+  selector:
+    matchLabels:
+      app: devops-group2-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: devops-group2-client
+    spec:
+      containers:
+        - name: devops-group2-client
+          image: hawksdev/devops-group2-client:1.0.2
+          tty: true
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-group2-backend
+spec:
+  selector:
+    matchLabels:
+      app: devops-group2-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: devops-group2-backend
+    spec:
+      containers:
+        - name: devops-group2-backend
+          image: hawksdev/devops-group2-backend:1.0.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: devops-group2-backend-secrets
+                  key: MONGODB_URI
